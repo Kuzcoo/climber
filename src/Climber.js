@@ -6,19 +6,21 @@ import {map} from './states/load';
 const STATE_STAND = 'STATE_STAND';
 const STATE_WALK = 'STATE_WALK';
 const STATE_CLIMB = 'STATE_CLIMB';
+const STATE_HURT = 'STATE_HURT';
 const DIR_LEFT = 0;
 const DIR_RIGHT = 1;
 const DIR_CLIMB = 2;
+const SPRITE_HURT_POS_Y = 3;
 
 export default class Climber {
   width = 16;
-  height = 19;
-  velocity = 2;
+  height = 18;
+  velocity = 1;
   imageNumber = 0;
   state = STATE_STAND;
   framesByImage = 8;
   framesElapsed = 0;
-  direction = DIR_RIGHT;
+  direction = DIR_LEFT;
 
   constructor(x, y) {
     this.x = x;
@@ -38,7 +40,7 @@ export default class Climber {
   }
 
   hasEndedClimbDown() {
-    return !map.hasLadder(this.x + this.width/2, this.y+20);    
+    return !map.hasLadder(this.x + this.width/2, this.y+18);    
   }
 
   updateClimbFrame() {
@@ -74,7 +76,7 @@ export default class Climber {
         return this.state = STATE_STAND;
       }
 
-      this.y -= this.velocity;
+      this.y -= this.velocity/2;
       this.updateClimbFrame();
     }
 
@@ -83,7 +85,7 @@ export default class Climber {
         return this.state = STATE_STAND;
       }
 
-      this.y += this.velocity;
+      this.y += this.velocity/2;
       this.updateClimbFrame();
     }
   }
@@ -141,6 +143,37 @@ export default class Climber {
     }
   }
 
+  setHurtState() {
+    if (this.state === STATE_HURT) return;
+
+    this.state = STATE_HURT;
+    this.setHurtGraphics();
+  }
+
+  setHurtGraphics() {
+    this.framesElapsed = 0;
+    this.imageNumber = 0;
+    this.direction = SPRITE_HURT_POS_Y;
+  }
+
+  updateHurtFrame() {
+    this.framesElapsed++;
+
+    if (this.framesElapsed < this.framesByImage) {
+      return;
+    }
+
+    this.framesElapsed = 0;
+
+    this.imageNumber = ++this.imageNumber === 2 ?
+      0 :
+      this.imageNumber; 
+  }
+
+  handleHurt() {
+    this.updateHurtFrame();
+  }
+
   handleInputs() {
     switch (this.state) {
       case STATE_STAND:
@@ -152,6 +185,9 @@ export default class Climber {
       case STATE_CLIMB:
         this.handleClimb();
       break;
+      case STATE_HURT:
+        this.handleHurt();
+      break;
     };
   }
 
@@ -160,10 +196,11 @@ export default class Climber {
   }
 
   draw() {
+    ctx.imageSmoothingEnabled = false;
     ctx.drawImage(
-      getImageByName('climber'),
+      getImageByName('sprite'),
       this.imageNumber*this.width, 
-      this.direction*this.height,
+      this.direction*this.height+this.direction,
       this.width,
       this.height,
       this.x, 

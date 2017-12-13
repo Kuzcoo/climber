@@ -7,6 +7,7 @@ import {
 } from '../../lib/Assets';
 
 import {init as initKeyBoarder} from '../../lib/Keyboarder';
+import Collider from '../../lib/Collider';
 
 import Map from '../Map';
 import Climber from '../Climber';
@@ -16,7 +17,10 @@ import {
   GAME_PLAY
 } from './states';
 
-export const climber = new Climber(0, canvasHeight - (56 + 19));
+export const climber = new Climber(
+  canvasWidth - 18, 
+  canvasHeight - (56 + 18)
+  );
 export const map = new Map(0, 0);
 
 setLoadState();
@@ -33,7 +37,7 @@ export function setLoadState() {
 
 function load() {
   initKeyBoarder();
-
+  Collider.addEntity('climber', climber);
   loadResources()
     .then(message => {
       if ('LOAD_SUCESS' === message) {
@@ -49,7 +53,7 @@ function setPlayState() {
 
 function loadResources() {
   return loadImages([
-    {name: 'climber', path: '../assets/climber.png'},
+    {name: 'sprite', path: '../assets/sprite.png'},
     {name: 'level1', path: '../assets/level1.png'},
   ]);
 }
