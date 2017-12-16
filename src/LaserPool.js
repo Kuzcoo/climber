@@ -15,8 +15,8 @@ const laserYPositions = [
   11
 ];
 
-export function initialize(n) {
-  createLasers(n);
+export function initialize(n, velocity) {
+  createLasers(n, velocity);
   launchFirstThree();
 }
 
@@ -34,6 +34,13 @@ export function launchLasers() {
       Math.max(160, Math.random()*300)
     );
   });
+}
+
+export function reset(n, velocity) {
+ lasers = [];
+
+ Collider.removeEntity('laser');
+ initialize(n, velocity);
 }
 
 export function update() {
@@ -65,11 +72,11 @@ function launchFirstThree() {
   }
 }
 
-function createLasers(n) {
+function createLasers(n, velocity) {
   for (let i = 0; i < n; i++) {
     lasers.push({
       alive: true,
-      instance: new Laser(0, laserYPositions[i])
+      instance: new Laser(0, laserYPositions[i], velocity)
     });
 
     Collider.addEntity('laser', lasers[i].instance);

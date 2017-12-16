@@ -1,17 +1,17 @@
 import {ctx} from './Settings';
 import {getImageByName} from '../lib/Assets';
-import {level1} from './levels/level1';
+import {ladders} from './Ladders';
 
 export default class Map {
 
-  constructor(x, y) {
+  constructor(x, y, levelNum) {
     this.x = x;
     this.y = y;
-    this.level = 'level1';
+    this.level = levelNum;
   }
 
   hasLadder(x, y) {
-    return level1.ladders.some(ladderCoords => {
+    return ladders.some(ladderCoords => {
       return x > ladderCoords.x &&
              x < ladderCoords.x + 16 &&
              y > ladderCoords.y - 28 &&
@@ -20,7 +20,7 @@ export default class Map {
   }
 
   hasLadderBelow(x, y) {
-    return level1.ladders.some(ladderCoords => {
+    return ladders.some(ladderCoords => {
       return x > ladderCoords.x &&
              x < ladderCoords.x + 16 &&
              y === ladderCoords.y - 24;

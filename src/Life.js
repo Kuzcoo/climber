@@ -3,6 +3,8 @@ import {getImageByName} from '../lib/Assets';
 
 var life = 2;
 
+export const getLife = () => life;
+
 export function decrement() {
   life = life - 1;
 

@@ -4,16 +4,16 @@ import {getImageByName} from '../lib/Assets';
 export default class Laser {
   width = 4;
   height = 20;
-  velocity = 0.5;
   isActive = false;
   spritePos = 48;
   framesElapsed = 0;
   startAfterFrames = 0;
   savedPos = 0;
 
-  constructor(x = 0, y = 0) {
+  constructor(x = 0, y = 0, velocity = 0.5) {
     this.x = x;
     this.y = y;
+    this.velocity = velocity;
     this.savedPos = y;
   }
 
@@ -25,6 +25,10 @@ export default class Laser {
   desactivate() {
     this.isActive = false;
     this.framesElapsed = 0;
+  }
+
+  setVelocity(v) {
+    this.velocity = v;
   }
 
   reset() {

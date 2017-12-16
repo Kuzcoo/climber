@@ -25,6 +25,17 @@ export default class Climber {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.initialPosX = x;
+    this.initialPosY = y;
+  }
+
+  reset() {
+    this.x = this.initialPosX;
+    this.y = this.initialPosY;
+    this.direction = DIR_LEFT;
+    this.state = STATE_STAND;
+    this.framesElapsed = 0;
+    this.imageNumber = 0;
   }
 
   canClimb() {
