@@ -11,19 +11,15 @@ const level3 = {
 };
 
 const level4 = {
-  laserVelocity: 0.75
+  laserVelocity: 0.8
 };
 
 const level5 = {
-  laserVelocity: 0.75
+  laserVelocity: 0.9
 };
 
 const level6 = {
   laserVelocity: 0.8
-};
-
-const level7 = {
-  laserVelocity: 0.85
 };
 
 const Levels = {

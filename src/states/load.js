@@ -47,7 +47,8 @@ function load() {
 
 function loadSprite() {
   return loadImages([
-    {name: 'sprite', path: '../assets/sprite.png'}
+    {name: 'sprite', path: '../assets/sprite.png'},
+    {name: 'game_over', path: '../assets/game_over.png'}
   ]);
 }
 

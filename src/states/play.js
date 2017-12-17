@@ -23,6 +23,10 @@ import {
 } from './load';
 
 import {
+  draw as drawGameOver
+} from '../screens/gameOver';
+
+import {
   decrement as decrementLife,
   draw as drawLife,
   getLife
@@ -54,7 +58,7 @@ Game.addState(
     },
 
     'draw': () => {
-
+      drawGameOver();
     }
   }
 );
